@@ -1,7 +1,7 @@
 "use client"
 
-import  from "../frontend/dashboard"
+import Dashboard from "../frontend/dashboard"
 
 export default function SyntheticV0PageForDeployment() {
-  return < />
+  return <Dashboard />
 }
