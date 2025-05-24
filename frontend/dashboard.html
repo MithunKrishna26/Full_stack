@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CalorieFit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>CalorieFit</span>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" onclick="showHome()" class="nav-item active">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span>Home</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                
+                <a href="#" onclick="showFoodTracking()" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <span>Food Tracking</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                
+                <a href="#" onclick="showProfile()" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <span>Profile</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                
+                <a href="#" onclick="logout()" class="nav-item logout">
+                    <div class="nav-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <span>Logout</span>
+                    <div class="nav-indicator"></div>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <div id="homeSection" class="section active">
+                <div class="section-header">
+                    <h1><i class="fas fa-home"></i> Dashboard Overview</h1>
+                    <p>Welcome back! Here's your nutrition summary</p>
+                </div>
+                
+                <!-- BMI Calculator Card -->
+                <div class="bmi-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calculator"></i> BMI Calculator</h2>
+                    </div>
+                    <div class="bmi-content">
+                        <div class="bmi-circle">
+                            <div class="bmi-value" id="bmiValue">-</div>
+                            <div class="bmi-label">BMI</div>
+                        </div>
+                        <div class="bmi-info">
+                            <div class="bmi-status" id="bmiStatus">Calculate your BMI</div>
+                            <div class="bmi-description">Body Mass Index based on your height and weight</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Daily Summary Cards -->
+                <div class="summary-grid">
+                    <div class="summary-card calories">
+                        <div class="card-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Calories</h3>
+                            <div class="card-value" id="totalCalories">0</div>
+                            <div class="card-label">kcal today</div>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card protein">
+                        <div class="card-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Protein</h3>
+                            <div class="card-value" id="totalProtein">0g</div>
+                            <div class="card-label">consumed</div>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card carbs">
+                        <div class="card-icon">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Carbohydrates</h3>
+                            <div class="card-value" id="totalCarbs">0g</div>
+                            <div class="card-label">consumed</div>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card fat">
+                        <div class="card-icon">
+                            <i class="fas fa-cheese"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Fat</h3>
+                            <div class="card-value" id="totalFat">0g</div>
+                            <div class="card-label">consumed</div>
+                        </div>
+                        <div class="card-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Tracking Section -->
+            <div id="foodTrackingSection" class="section">
+                <div class="section-header">
+                    <h1><i class="fas fa-utensils"></i> Food Tracking</h1>
+                    <p>Track your meals and monitor your nutrition intake</p>
+                </div>
+                
+                <!-- Food Search Card -->
+                <div class="food-search-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-search"></i> Add Food</h2>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="foodSearch" placeholder="Search for food items...">
+                        </div>
+                        <div id="searchResults" class="search-results"></div>
+                    </div>
+                </div>
+
+                <!-- Categories Section -->
+                <div class="categories-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-tags"></i> Food Categories</h2>
+                        <button onclick="addCategory()" class="btn-add">
+                            <i class="fas fa-plus"></i> Add Category
+                        </button>
+                    </div>
+                    <div class="categories-grid" id="categoriesList"></div>
+                </div>
+
+                <!-- Food Entries -->
+                <div class="food-entries-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list"></i> Today's Food Entries</h2>
+                        <div class="date-selector">
+                            <i class="fas fa-calendar"></i>
+                            <span id="currentDate"></span>
+                        </div>
+                    </div>
+                    <div id="foodEntriesList" class="food-entries-list"></div>
+                </div>
+
+                <!-- Nutrition Chart -->
+                <div class="nutrition-chart-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-pie"></i> Nutrition Breakdown</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="nutritionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profileSection" class="section">
+                <div class="section-header">
+                    <h1><i class="fas fa-user-circle"></i> Profile Settings</h1>
+                    <p>Manage your personal information and preferences</p>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Full Name</label>
+                                <input type="text" id="profileName" placeholder="Enter your name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-birthday-cake"></i> Age</label>
+                                <input type="number" id="profileAge" placeholder="Your age">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-venus-mars"></i> Gender</label>
+                            <select id="profileGender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-ruler-vertical"></i> Height (cm)</label>
+                                <input type="number" id="profileHeight" step="0.1" placeholder="170">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-weight"></i> Weight (kg)</label>
+                                <input type="number" id="profileWeight" step="0.1" placeholder="70">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <span>Update Profile</span>
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Food Modal -->
+    <div id="addFoodModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle"></i> Add Food Entry</h2>
+                <span class="close"><i class="fas fa-times"></i></span>
+            </div>
+            
+            <form id="addFoodForm" class="modal-form">
+                <input type="hidden" id="selectedFoodId">
+                
+                <div class="selected-food">
+                    <div class="food-icon">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <div class="food-details">
+                        <h3 id="selectedFoodName">Selected Food</h3>
+                        <p>Add this item to your daily intake</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-weight-hanging"></i> Quantity (grams)</label>
+                    <input type="number" id="foodQuantity" placeholder="100" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-tags"></i> Category</label>
+                    <select id="foodCategory" required></select>
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    <span>Add to Diary</span>
+                    <i class="fas fa-check"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
